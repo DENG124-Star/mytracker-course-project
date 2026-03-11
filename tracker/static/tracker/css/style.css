@@ -1,0 +1,240 @@
+body.app-bg {
+    background: linear-gradient(135deg, #335d6e, #4c7d94);
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: #1f2937;
+}
+
+.app-navbar {
+    background-color: #0b4570;
+}
+
+.login-wrapper {
+    min-height: calc(100vh - 90px);
+    display: flex;
+    align-items: center;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.15;
+}
+
+.hero-subtitle {
+    color: #dbeafe;
+    max-width: 520px;
+}
+
+.auth-panel {
+    max-width: 440px;
+    margin-left: auto;
+}
+
+.auth-card {
+    padding: 2rem;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.auth-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: #eaf3fb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0b4570;
+    font-size: 1.8rem;
+    margin: 0 auto 1rem auto;
+}
+
+.btn-primary-custom {
+    background-color: #0b4570;
+    border: none;
+    color: #ffffff;
+    border-radius: 10px;
+    padding: 0.7rem 1.1rem;
+    font-weight: 600;
+}
+
+.btn-primary-custom:hover {
+    background-color: #083554;
+    color: #ffffff;
+}
+
+.form-control:focus,
+.btn:focus,
+a:focus {
+    outline: 3px solid #ffcc00;
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+.error-text {
+    color: #c81e1e;
+    font-size: 0.92rem;
+    margin-top: 0.35rem;
+}
+
+.status-text {
+    font-size: 0.95rem;
+    margin-top: 0.75rem;
+    color: #065f46;
+}
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+
+    .auth-panel {
+        margin: 2rem auto 0 auto;
+    }
+}
+
+.summary-banner {
+    background: linear-gradient(135deg, #0d47a1, #1d4ed8);
+    border-radius: 18px;
+    color: #ffffff;
+    padding: 2rem;
+    min-height: 220px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+}
+
+.summary-amount {
+    font-size: 3.25rem;
+    font-weight: 700;
+}
+
+.summary-card {
+    border: none;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+}
+
+.budget-bar {
+    height: 12px;
+    border-radius: 999px;
+    background: #e5e7eb;
+    overflow: hidden;
+}
+
+.budget-bar-fill {
+    height: 100%;
+    width: 90%;
+    background: #f59e0b;
+    border-radius: 999px;
+}
+
+.warning-text {
+    color: #b45309;
+    font-weight: 600;
+}
+
+.chart-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto;
+    background: conic-gradient(#0b4570 0 40%, #d97706 40% 70%, #e5e7eb 70% 100%);
+}
+
+@media (max-width: 768px) {
+    .summary-amount {
+        font-size: 2.4rem;
+    }
+}
+
+.form-card {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem;
+    border: none;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+}
+
+.btn-secondary-custom {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    border-radius: 10px;
+    padding: 0.7rem 1.1rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btn-secondary-custom:hover {
+    background-color: #e2e8f0;
+    color: #1f2937;
+}
+
+.form-select:focus {
+    outline: 3px solid #ffcc00;
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+@media (max-width: 768px) {
+    .form-card {
+        padding: 1.25rem;
+    }
+}
+
+.form-select:invalid {
+    color: #9ca3af;
+}
+
+.form-select option {
+    color: #111827;
+}
+
+.table-card {
+    padding: 1.5rem;
+    border: none;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+}
+
+.table thead th {
+    background: #5e93d5;
+    color: #ffffff;
+    vertical-align: middle;
+}
+
+.badge-food {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.badge-transport {
+    background: #fce7f3;
+    color: #be185d;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    padding: 0.2rem 0.4rem;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .table-card {
+        padding: 1rem;
+    }
+}
+
+.form-select:invalid {
+    color: #9ca3af;
+}
+
+.form-select option {
+    color: #111827;
+}

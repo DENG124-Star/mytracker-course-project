@@ -1,0 +1,70 @@
+{% extends "tracker/base.html" %}
+
+{% block title %}Dashboard | MyTracker{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark app-navbar">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'tracker:dashboard' %}">MyTracker</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'tracker:dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tracker:add_expense' %}">Add Expense</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tracker:expense_list' %}">History</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="mb-4">
+    <div class="summary-banner d-flex flex-column justify-content-center">
+        <p class="mb-2 text-uppercase">{{ month_name }} Spend</p>
+        <div class="summary-amount">£{{ monthly_total|floatformat:2 }}</div>
+    </div>
+</section>
+
+<section class="row g-4">
+    <div class="col-md-6">
+        <div class="card summary-card h-100 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="h4 mb-0">Monthly Budget</h3>
+                <span class="fs-4 fw-bold text-warning">{{ budget_percent }}%</span>
+            </div>
+
+            <div class="budget-bar mb-3" aria-label="Budget progress bar">
+                <div class="budget-bar-fill" style="width: {{ budget_percent }}%;"></div>
+            </div>
+
+            <p class="warning-text mb-0">⚠ Approaching limit (£{{ budget_limit|floatformat:2 }})</p>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card summary-card h-100 p-4">
+            <div class="row align-items-center">
+                <div class="col-5 text-center">
+                    <div class="chart-placeholder"></div>
+                </div>
+                <div class="col-7">
+                    <h3 class="h4 mb-2">{{ top_category_name }}</h3>
+                    <p class="fs-4 text-secondary mb-0">{{ top_category_percent }}% of total</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "tracker/base.html" %}
+{% load static %}
+
+{% block title %}Register | MyTracker{% endblock %}
+
+{% block content %}
+<section class="login-wrapper">
+    <div class="row w-100 justify-content-center">
+        <div class="col-lg-6">
+            <div class="auth-card">
+                <div class="auth-icon" aria-hidden="true">📝</div>
+                <h2 class="text-center mb-4">Create your account</h2>
+
+                <form id="registerForm" method="post" novalidate>
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            class="form-control"
+                            aria-describedby="usernameError"
+                        >
+                        <div id="usernameError" class="error-text" aria-live="polite"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="registerEmail" class="form-label">Email</label>
+                        <input
+                            type="email"
+                            id="registerEmail"
+                            name="registerEmail"
+                            class="form-control"
+                            aria-describedby="registerEmailError"
+                        >
+                        <div id="registerEmailError" class="error-text" aria-live="polite"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="registerPassword" class="form-label">Password</label>
+                        <input
+                            type="password"
+                            id="registerPassword"
+                            name="registerPassword"
+                            class="form-control"
+                            aria-describedby="registerPasswordError"
+                        >
+                        <div id="registerPasswordError" class="error-text" aria-live="polite"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            class="form-control"
+                            aria-describedby="confirmPasswordError"
+                        >
+                        <div id="confirmPasswordError" class="error-text" aria-live="polite"></div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary-custom w-100">Register</button>
+
+                    <p class="text-center mt-3 mb-0">
+                        Already have an account?
+                        <a href="{% url 'tracker:login' %}">Sign in</a>
+                    </p>
+
+                    <div id="registerStatus" class="status-text text-center" aria-live="polite"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'tracker/js/register.js' %}"></script>
+{% endblock %}

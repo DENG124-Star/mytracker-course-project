@@ -1,0 +1,108 @@
+{% extends "tracker/base.html" %}
+{% load static %}
+
+{% block title %}Add Expense | MyTracker{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark app-navbar">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'tracker:dashboard' %}">MyTracker</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tracker:dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'tracker:add_expense' %}">Add Expense</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tracker:expense_list' %}">History</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section>
+    <div class="form-card">
+        <h2 class="mb-4">New Transaction</h2>
+
+        <form id="expenseForm" method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="amount" class="form-label">Amount (£)</label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        id="amount"
+                        name="amount"
+                        class="form-control"
+                        aria-describedby="amountError"
+                    >
+                    <div id="amountError" class="error-text" aria-live="polite"></div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="expenseDate" class="form-label">Date</label>
+                    <input
+                        type="date"
+                        id="expenseDate"
+                        name="expenseDate"
+                        class="form-control"
+                        aria-describedby="dateError"
+                    >
+                    <div id="dateError" class="error-text" aria-live="polite"></div>
+                </div>
+
+                <div class="col-12">
+                    <label for="category" class="form-label">Category</label>
+                    <select
+                        id="category"
+                        name="category"
+                        class="form-select"
+                        aria-describedby="categoryError"
+                        required
+                    >
+                        <option value="" disabled selected hidden>Select a category</option>
+                        {% for category in categories %}
+                            <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                    <div id="categoryError" class="error-text" aria-live="polite"></div>
+                </div>
+
+                <div class="col-12">
+                    <label for="note" class="form-label">Note (Optional)</label>
+                    <input
+                        type="text"
+                        id="note"
+                        name="note"
+                        class="form-control"
+                    >
+                </div>
+            </div>
+
+            <div class="d-flex gap-3 mt-4">
+                <button type="submit" class="btn btn-primary-custom">Save</button>
+                <a href="{% url 'tracker:dashboard' %}" class="btn btn-secondary-custom">Cancel</a>
+            </div>
+
+            <div id="expenseStatus" class="status-text" aria-live="polite"></div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'tracker/js/add_expense.js' %}"></script>
+{% endblock %}

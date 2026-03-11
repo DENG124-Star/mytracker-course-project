@@ -1,0 +1,94 @@
+{% extends "tracker/base.html" %}
+{% load static %}
+
+{% block title %}Expense History | MyTracker{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark app-navbar">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'tracker:dashboard' %}">MyTracker</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+            aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tracker:dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tracker:add_expense' %}">Add Expense</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'tracker:expense_list' %}">History</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<section class="table-card">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+        <h2 class="mb-0">My Expenses</h2>
+
+        <div class="d-flex flex-column flex-sm-row gap-2">
+            <select id="filterDate" class="form-select">
+                <option value="" disabled selected hidden>Filter date</option>
+                <option value="12 Feb">12 Feb</option>
+                <option value="11 Feb">11 Feb</option>
+                <option value="10 Feb">10 Feb</option>
+            </select>
+
+            <select id="filterCategory" class="form-select">
+                <option value="" disabled selected hidden>Category</option>
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table align-middle" id="expenseTable">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Note</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                <tr data-date="{{ expense.date }}" data-category="{{ expense.category }}">
+                    <td>{{ expense.date }}</td>
+                    <td>
+                        {% if expense.category == "Food" %}
+                            <span class="badge rounded-pill badge-food">{{ expense.category }}</span>
+                        {% elif expense.category == "Transport" %}
+                            <span class="badge rounded-pill badge-transport">{{ expense.category }}</span>
+                        {% else %}
+                            <span class="badge rounded-pill text-bg-secondary">{{ expense.category }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ expense.note }}</td>
+                    <td>{{ expense.amount }}</td>
+                    <td>
+                        <button type="button" class="icon-btn edit-btn" aria-label="Edit expense">✏️</button>
+                        <button type="button" class="icon-btn delete-btn" aria-label="Delete expense">🗑️</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'tracker/js/expense_list.js' %}"></script>
+{% endblock %}

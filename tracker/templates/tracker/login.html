@@ -1,0 +1,69 @@
+{% extends "tracker/base.html" %}
+{% load static %}
+
+{% block title %}Login | MyTracker{% endblock %}
+
+{% block content %}
+<section class="login-wrapper">
+    <div class="row w-100 align-items-center g-4">
+        <div class="col-lg-7">
+            <div class="d-flex flex-column justify-content-center h-100">
+                <h1 class="hero-title">TRACK YOUR DAILY EXPENSE EASY &amp; COMFORTABLE</h1>
+                <p class="hero-subtitle mt-3">
+                    Sign in to manage your spending, review your monthly summary, and keep your budget under control.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="auth-panel">
+                <div class="auth-card">
+                    <div class="auth-icon" aria-hidden="true">💳</div>
+                    <h2 class="text-center mb-4">Sign in to MyTracker</h2>
+
+                    <form id="loginForm" method="post" novalidate>
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Username or Email</label>
+                            <input
+                                type="text"
+                                id="loginEmail"
+                                name="loginEmail"
+                                class="form-control"
+                                aria-describedby="loginEmailError"
+                            >
+                            <div id="loginEmailError" class="error-text" aria-live="polite"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input
+                                type="password"
+                                id="loginPassword"
+                                name="loginPassword"
+                                class="form-control"
+                                aria-describedby="loginPasswordError"
+                            >
+                            <div id="loginPasswordError" class="error-text" aria-live="polite"></div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary-custom w-100">Sign In</button>
+
+                        <p class="text-center mt-3 mb-0">
+                            Don’t have an account?
+                            <a href="{% url 'tracker:register' %}">Register</a>
+                        </p>
+
+                        <div id="loginStatus" class="status-text text-center" aria-live="polite"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'tracker/js/login.js' %}"></script>
+{% endblock %}
