@@ -1,0 +1,5 @@
+# Django
+Django>=4.2,<5.0
+
+# Additional dependencies
+python-dateutil>=2.8.2
