@@ -1,5 +1,7 @@
-# Django
-Django>=4.2,<5.0
-
-# Additional dependencies
-python-dateutil>=2.8.2
+asgiref==3.11.1
+Django==4.2.29
+gunicorn==25.1.0
+packaging==26.0
+python-dateutil==2.9.0.post0
+six==1.17.0
+sqlparse==0.5.5
