@@ -10,7 +10,8 @@
 
 <!-- Filter Section -->
 <div class="filter-card">
-    <form method="get" class="filter-form">
+    <form method="get" class="filter-form" aria-labelledby="filter-heading">
+        <h2 id="filter-heading" class="visually-hidden">Filter expenses</h2>
         <div class="filter-row">
             <div class="filter-group">
                 <label for="start_date">From</label>
@@ -52,8 +53,8 @@
                        value="{{ filter_year|default:'' }}" placeholder="Year">
             </div>
             <div class="filter-actions">
-                <button type="submit" class="btn btn-secondary">Filter</button>
-                <a href="{% url 'expense_list' %}" class="btn btn-outline">Clear</a>
+                <button type="submit" class="btn btn-secondary">Filter expenses</button>
+                <a href="{% url 'expense_list' %}" class="btn btn-outline">Clear filters</a>
             </div>
         </div>
     </form>
@@ -66,7 +67,7 @@
     </div>
 
     <div class="table-container">
-        <table class="table">
+        <table class="table" aria-label="Expense records">
             <thead>
                 <tr>
                     <th>Date</th>
@@ -84,8 +85,8 @@
                         <td class="amount">${{ expense.amount }}</td>
                         <td>{{ expense.note|default:"-"|truncatechars:30 }}</td>
                         <td class="actions">
-                            <a href="{% url 'expense_update' expense.pk %}" class="btn btn-sm btn-secondary">Edit</a>
-                            <a href="{% url 'expense_delete' expense.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                            <a href="{% url 'expense_update' expense.pk %}" class="btn btn-sm btn-secondary" aria-label="Edit expense {{ expense.note|default:'record' }}">Edit</a>
+                            <a href="{% url 'expense_delete' expense.pk %}" class="btn btn-sm btn-danger" aria-label="Delete expense {{ expense.note|default:'record' }}">Delete</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -95,7 +96,7 @@
 {% else %}
     <div class="empty-state">
         <h3>No expenses found</h3>
-        <p>Start tracking your spending by adding your first expense.</p>
+        <p>No expenses matched the selected filters. Start tracking your spending by adding your first expense.</p>
         <a href="{% url 'expense_create' %}" class="btn btn-primary">Add Your First Expense</a>
     </div>
 {% endif %}
