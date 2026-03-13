@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Budgets - Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Budgets</h1>
+    <a href="{% url 'budget_create' %}" class="btn btn-primary">+ Add Budget</a>
+</div>
+
+{% if budgets %}
+    <div class="budget-grid">
+        {% for budget in budgets %}
+            <div class="card budget-card {% if budget.exceeded %}exceeded{% elif budget.warning %}warning{% endif %}">
+                <div class="card-header">
+                    <h3>{{ budget.month }}/{{ budget.year }}</h3>
+                    {% if budget.exceeded %}
+                        <span class="badge badge-danger">Exceeded</span>
+                    {% elif budget.warning %}
+                        <span class="badge badge-warning">Warning</span>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <div class="budget-stats">
+                        <div class="budget-stat">
+                            <span class="label">Budget</span>
+                            <span class="value">${{ budget.limit_amount }}</span>
+                        </div>
+                        <div class="budget-stat">
+                            <span class="label">Spent</span>
+                            <span class="value {% if budget.exceeded %}text-danger{% endif %}">${{ budget.spent }}</span>
+                        </div>
+                        <div class="budget-stat">
+                            <span class="label">Used</span>
+                            <span class="value">{{ budget.percentage|floatformat:1 }}%</span>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar {% if budget.exceeded %}exceeded{% elif budget.warning %}warning{% endif %}"
+                             style="width: {% if budget.percentage > 100 %}100{% else %}{{ budget.percentage|floatformat:0 }}{% endif %}%;">
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <a href="{% url 'budget_update' budget.pk %}" class="btn btn-sm btn-secondary">Edit</a>
+                        <a href="{% url 'budget_delete' budget.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state">
+        <h3>No budgets set</h3>
+        <p>Set monthly budgets to track your spending limits.</p>
+        <a href="{% url 'budget_create' %}" class="btn btn-primary">Set Your First Budget</a>
+    </div>
+{% endif %}
+{% endblock %}

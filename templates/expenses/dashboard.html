@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Dashboard</h1>
+    <p class="text-muted">Overview of your finances for {{ current_month }}/{{ current_year }}</p>
+</div>
+
+{% if budget_warning %}
+<div class="alert alert-warning">
+    <strong>⚠️ Budget Warning!</strong> You've used {{ percentage_used|floatformat:1 }}% of your monthly budget.
+    {% if budget_exceeded %}
+        <span class="text-danger"> Your budget has been exceeded!</span>
+        {% if overrun_reason %}
+            <p class="overrun-detail" style="margin-top: 0.5rem; margin-bottom: 0;">
+                {{ overrun_reason }}
+            </p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endif %}
+
+<div class="dashboard-grid">
+    <!-- Budget Card -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Monthly Budget</h3>
+        </div>
+        <div class="card-body">
+            {% if current_budget %}
+                <div class="budget-info">
+                    <div class="budget-amount">
+                        <span class="label">Budget Limit</span>
+                        <span class="value">${{ current_budget.limit_amount }}</span>
+                    </div>
+                    <div class="budget-amount">
+                        <span class="label">Spent</span>
+                        <span class="value {% if budget_exceeded %}text-danger{% endif %}">${{ spent_amount }}</span>
+                    </div>
+                    <div class="budget-amount">
+                        <span class="label">Remaining</span>
+                        {% with remaining=current_budget.limit_amount|add:"-"|add:spent_amount %}
+                            <span class="value {% if remaining < 0 %}text-danger{% else %}text-success{% endif %}">
+                                ${{ remaining|floatformat:2 }}
+                            </span>
+                        {% endwith %}
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar {% if budget_warning %}warning{% endif %} {% if budget_exceeded %}exceeded{% endif %}"
+                         style="width: {% if percentage_used > 100 %}100{% else %}{{ percentage_used|floatformat:0 }}{% endif %}%;">
+                    </div>
+                </div>
+                <p class="progress-text">{{ percentage_used|floatformat:1 }}% used</p>
+            {% else %}
+                <p class="text-muted">No budget set for this month.</p>
+                <a href="{% url 'budget_create' %}" class="btn btn-secondary">Set Budget</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Monthly Total Card -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Monthly Expenses</h3>
+        </div>
+        <div class="card-body">
+            <div class="stat-value">${{ monthly_total }}</div>
+            <p class="stat-label">Total spent this month</p>
+            <a href="{% url 'expense_create' %}" class="btn btn-primary">Add Expense</a>
+        </div>
+    </div>
+
+    <!-- Category Breakdown -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Spending by Category</h3>
+        </div>
+        <div class="card-body">
+            {% if category_totals %}
+                <div class="category-list">
+                    {% for item in category_totals %}
+                        <div class="category-item">
+                            <span class="category-name">{{ item.category__name }}</span>
+                            <span class="category-amount">${{ item.total }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-muted">No expenses this month.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Recent Expenses -->
+    <div class="card">
+        <div class="card-header">
+            <h3>Recent Expenses</h3>
+        </div>
+        <div class="card-body">
+            {% if recent_expenses %}
+                <ul class="expense-list">
+                    {% for expense in recent_expenses %}
+                        <li class="expense-item">
+                            <div class="expense-info">
+                                <span class="expense-category">{{ expense.category.name }}</span>
+                                <span class="expense-date">{{ expense.expense_date|date:"M d" }}</span>
+                            </div>
+                            <span class="expense-amount">${{ expense.amount }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'expense_list' %}" class="btn btn-link">View All Expenses →</a>
+            {% else %}
+                <p class="text-muted">No expenses recorded yet.</p>
+                <a href="{% url 'expense_create' %}" class="btn btn-primary">Add Your First Expense</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="quick-actions">
+    <a href="{% url 'expense_create' %}" class="btn btn-primary">+ Add Expense</a>
+    <a href="{% url 'category_create' %}" class="btn btn-secondary">+ Add Category</a>
+    <a href="{% url 'budget_create' %}" class="btn btn-secondary">+ Set Budget</a>
+    <a href="{% url 'monthly_summary' %}" class="btn btn-outline">View Summary</a>
+</div>
+{% endblock %}

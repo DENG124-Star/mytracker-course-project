@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ title }}</h1>
+</div>
+
+<div class="form-container">
+    <form method="post" class="form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="category">Category</label>
+            {% if form.category.field.queryset %}
+                <select name="category" id="category" class="form-control" required>
+                    <option value="">Select a category</option>
+                    {% for choice in form.category.field.queryset %}
+                        <option value="{{ choice.pk }}" {% if form.category.value|stringformat:"s" == choice.pk|stringformat:"s" %}selected{% endif %}>
+                            {{ choice.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <div class="alert alert-warning">
+                    You need to create a category first.
+                    <a href="{% url 'category_create' %}" class="btn btn-sm btn-primary" style="margin-left: 0.5rem;">Add Category</a>
+                </div>
+            {% endif %}
+            {% if form.category.errors %}
+                <span class="error">{{ form.category.errors.0 }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="amount">Amount ($)</label>
+            <input type="number" name="amount" id="amount" class="form-control"
+                   value="{{ form.amount.value|default:'' }}" step="0.01" min="0" required>
+            {% if form.amount.errors %}
+                <span class="error">{{ form.amount.errors.0 }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="expense_date">Date</label>
+            <input type="date" name="expense_date" id="expense_date" class="form-control"
+                   value="{{ form.expense_date.value|date:'Y-m-d'|default:'' }}" required>
+            {% if form.expense_date.errors %}
+                <span class="error">{{ form.expense_date.errors.0 }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="note">Note (Optional)</label>
+            <textarea name="note" id="note" class="form-control" rows="3"
+                      placeholder="Add a description or note">{{ form.note.value|default:'' }}</textarea>
+            {% if form.note.errors %}
+                <span class="error">{{ form.note.errors.0 }}</span>
+            {% endif %}
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Expense</button>
+            <a href="{% url 'expense_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
