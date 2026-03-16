@@ -10,7 +10,15 @@ SECRET_KEY = 'django-insecure-expense-tracker-dev-key-change-in-production'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "mytracker-course-project.onrender.com"]
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "mytracker-course-project-zqsh.onrender.com",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://mytracker-course-project-zqsh.onrender.com",
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
