@@ -1,6 +1,7 @@
 """
 Django settings for expense_tracker project.
 """
+import os
 
 from pathlib import Path
 
@@ -10,15 +11,20 @@ SECRET_KEY = 'django-insecure-expense-tracker-dev-key-change-in-production'
 
 DEBUG = True
 
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "mytracker-course-project-zqsh.onrender.com",
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://mytracker-course-project-zqsh.onrender.com",
-]
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+CSRF_TRUSTED_ORIGINS = []
+
+if RENDER_EXTERNAL_HOSTNAME:
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
