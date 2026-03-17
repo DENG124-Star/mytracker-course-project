@@ -9,10 +9,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-expense-tracker-dev-key-change-in-production'
 
-import os
-
-# ...前面其他代码...
-
 DEBUG = True
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
@@ -20,6 +16,7 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
+    "mytracker-course-project.onrender.com",
 ]
 
 if RENDER_EXTERNAL_HOSTNAME:
